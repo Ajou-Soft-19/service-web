@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   const navigate = useNavigate();
-  console.log(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
 
   return (
     <Layout>
