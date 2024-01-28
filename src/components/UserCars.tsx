@@ -35,12 +35,11 @@ const UserCars = () => {
 
   useEffect(() => {
     getCars();
-  }, []);
+  }, [updateVehicleId]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data.get("vehicleType"));
     const body = {
       countryCode: data.get("countryCode"),
       licenceNumber: data.get("licenceNumber"),
@@ -61,7 +60,6 @@ const UserCars = () => {
   };
 
   const handleDelete = (event: MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.id);
     const vehicleId = event.currentTarget.id;
     fetch(`http://${import.meta.env.VITE_API_SERVER}:7001/api/vehicles/${vehicleId}`, {
       method: "DELETE",
@@ -77,7 +75,6 @@ const UserCars = () => {
   };
 
   const handleUpdate = (event: MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.id);
     const vehicleId = event.currentTarget.id;
     setUpdateVehicleId(Number(vehicleId));
     getCars();
