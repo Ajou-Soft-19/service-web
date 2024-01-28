@@ -9,11 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState, useEffect, FormEvent, MouseEvent } from "react";
+import UpdateCar from "./UpdateCar";
 
 const UserCars = () => {
-  const [cars, setCars] = useState<{ vehicleId: string; licenceNumber: string }[]>([]);
+  const [cars, setCars] = useState<{ vehicleId: number; licenceNumber: string }[]>([]);
   const accessToken = document.cookie.split("=")[1];
   const [vehicleType, setVehicleType] = useState("LIGHTWEIGHT_CAR");
+  const [updateVehicleId, setUpdateVehicleId] = useState(0);
 
   const handleChange = (event: SelectChangeEvent) => {
     setVehicleType(event.target.value as string);
@@ -74,6 +76,13 @@ const UserCars = () => {
       });
   };
 
+  const handleUpdate = (event: MouseEvent<HTMLButtonElement>) => {
+    console.log(event.currentTarget.id);
+    const vehicleId = event.currentTarget.id;
+    setUpdateVehicleId(Number(vehicleId));
+    getCars();
+  };
+
   return (
     <Box sx={{ marginTop: "30px", marginBottom: "30px" }}>
       <Typography variant="h4">차량 추가하기</Typography>
@@ -106,18 +115,22 @@ const UserCars = () => {
         </Button>
       </Box>
       <Typography variant="h4">내 차량 목록</Typography>
-      {cars.map((car) => (
-        <Paper key={car.vehicleId} elevation={6} sx={{ marginTop: "30px", marginBottom: "30px" }}>
-          <Typography>차량 아이디 {car.vehicleId} </Typography>
-          <Typography>라이센스 번호 {car.licenceNumber}</Typography>
-          <Button variant="outlined" id={car.vehicleId}>
-            수정하기
-          </Button>
-          <Button variant="outlined" onClick={handleDelete} id={car.vehicleId}>
-            삭제하기
-          </Button>
-        </Paper>
-      ))}
+      {cars.map((car) =>
+        car.vehicleId === updateVehicleId ? (
+          <UpdateCar vehicleId={car.vehicleId} setUpdateVehicleId={setUpdateVehicleId} />
+        ) : (
+          <Paper key={car.vehicleId} elevation={6} sx={{ marginTop: "30px", marginBottom: "30px" }}>
+            <Typography>차량 아이디 {car.vehicleId} </Typography>
+            <Typography>라이센스 번호 {car.licenceNumber}</Typography>
+            <Button variant="outlined" onClick={handleUpdate} id={car.vehicleId.toString()}>
+              수정하기
+            </Button>
+            <Button variant="outlined" onClick={handleDelete} id={car.vehicleId.toString()}>
+              삭제하기
+            </Button>
+          </Paper>
+        )
+      )}
     </Box>
   );
 };
