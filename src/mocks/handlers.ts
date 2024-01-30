@@ -1,23 +1,20 @@
 import { http, HttpResponse } from "msw";
 
 export const handlers = [
-  http.get("35.216.118.43:7000/api/account/create", () => {
-    return HttpResponse.json({ text: "hello, world" });
-  }),
-
-  http.get("/user/:id", ({ params }) => {
-    const { id } = params;
-    if (id === "admin") {
-      return HttpResponse.json({
-        id,
-        name: "John",
-        job: "admin",
-      });
-    }
+  http.get(`http://${import.meta.env.VITE_API_SERVER}:7001/api/auth/roles/emergency`, () => {
     return HttpResponse.json({
-      id,
-      name: "John",
-      job: "normal",
+      httpStatus: "OK",
+      code: 200,
+      data: [
+        {
+          memberId: 2,
+          userName: "kitez2_",
+        },
+        {
+          memberId: 1,
+          userName: "kitez3_",
+        },
+      ],
     });
   }),
 ];
