@@ -56,7 +56,7 @@ function useCircle(props: CircleProps) {
     if (!center) return;
     // if (!latLngEquals(center, circle.getCenter())) circle.setCenter(center);
     circle.setCenter(center);
-  }, [center]);
+  }, []);
 
   useEffect(() => {
     if (radius === undefined || radius === null) return;
