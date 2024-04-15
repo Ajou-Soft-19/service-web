@@ -1,95 +1,75 @@
-import Image from "next/image";
+'use client'
 import styles from "./page.module.css";
+import Chart from "react-apexcharts";
+import React, { useEffect, useState } from 'react'
+
+
+const props =  {
+  options: {
+    chart: {
+      id: "basic-bar"
+    },
+    xaxis: {
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+    }
+  },
+  series: [
+    {
+      name: "series-1",
+      data: [30, 40, 45, 50, 49, 60, 70, 91]
+    }
+  ]
+};
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false);
+  const TITLE = 'EPAS';
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <main className={styles.main}>
+        <div className={styles.header}>
+          <h2>{TITLE}</h2>
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        {isClient && (
+            <div className={styles.highBox}>
+              <div className={styles.highInnerBox}>
+                <div>
+                  <h3>4월 상위 3개 지역</h3>
+                </div>
+                <div className={styles.charBox}>
+                  <Chart
+                      options={props.options}
+                      series={props.series}
+                      type="bar"
+                      height="100%"
+                      width="100%"
+                  />
+                </div>
+              </div>
+            </div>
+        )}
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        <div className={styles.monthBox}>
+          <div className={styles.monthInnerBox}>
+            <div>
+              <h3>4월 지역별 배려 차량 수</h3>
+            </div>
+            <div className={styles.charBox}>
+              <Chart
+                  options={props.options}
+                  series={props.series}
+                  type="bar"
+                  height="100%"
+                  width="100%"
+              />
+            </div>
+          </div>
+        </div>
+      </main>
   );
 }
