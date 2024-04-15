@@ -1,33 +1,118 @@
 'use client'
 import styles from "./page.module.css";
 import Chart from "react-apexcharts";
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 
+export interface BarChartProps {
+  options: {
+    chart: {
+      id: string;
+    },
+    xaxis: {
+      categories: number[];
+    }
+  },
+  series: [
+    {
+      name: string;
+      data: number[];
+    }
+  ]
+}
+interface dataProps {
+  "year": number,
+  "month": number,
+  "count": number
+}
 
-const props =  {
+const data: BarChartProps =  {
   options: {
     chart: {
       id: "basic-bar"
     },
     xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+      categories: []
     }
   },
   series: [
     {
       name: "series-1",
-      data: [30, 40, 45, 50, 49, 60, 70, 91]
+      data: []
     }
   ]
 };
 
+const serverData: dataProps[] = [
+  {
+    "year": 2024,
+    "month": 1,
+    "count": 35,
+  },
+  {
+    "year": 2024,
+    "month": 2,
+    "count": 325,
+  },
+  {
+    "year": 2024,
+    "month": 3,
+    "count": 125,
+  },
+  {
+    "year": 2024,
+    "month": 4,
+    "count": 523,
+  },
+]
+
 export default function Home() {
-  const [isClient, setIsClient] = useState(false);
   const TITLE = 'EPAS';
+  const [top3Data, setTop3Data] = useState(data);
+  const [viewData, setViewData] = useState(data);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    /* API Request */
+    let datas: number[][] = [];
+    serverData.map((d) => {
+      datas.push([d.month, d.count]);
+    });
+
+    let categories: number[] = [];
+    let series_data: number[] = [];
+
+    datas.forEach((d) => {
+      categories.push(d[0]);
+      series_data.push(d[1]);
+    })
+
+    data.options.xaxis.categories = categories;
+    data.series[0].data = series_data;
+    setViewData(data);
+
+    datas.sort((a, b) => {
+      return b[1] - a[1];
+    });
+
+    const datas2: number[][] = datas.slice(0, 3);
+
+    const temp = datas2[0];
+    datas2[0] = datas2[1];
+    datas2[1] = temp;
+
+    categories = [];
+    series_data = [];
+
+    datas2.forEach((d) => {
+      categories.push(d[0]);
+      series_data.push(d[1]);
+    })
+
+    const data2 = JSON.parse(JSON.stringify(data));
+
+    data2.options.xaxis.categories = categories;
+    data2.series[0].data = series_data
+    setTop3Data(data2);
+  }, [])
 
   return (
       <main className={styles.main}>
@@ -35,16 +120,15 @@ export default function Home() {
           <h2>{TITLE}</h2>
         </div>
 
-        {isClient && (
             <div className={styles.highBox}>
               <div className={styles.highInnerBox}>
-                <div>
+                <div className={styles.titleBox}>
                   <h3>4월 상위 3개 지역</h3>
                 </div>
                 <div className={styles.charBox}>
                   <Chart
-                      options={props.options}
-                      series={props.series}
+                      options={top3Data.options}
+                      series={top3Data.series}
                       type="bar"
                       height="100%"
                       width="100%"
@@ -52,17 +136,16 @@ export default function Home() {
                 </div>
               </div>
             </div>
-        )}
 
         <div className={styles.monthBox}>
           <div className={styles.monthInnerBox}>
-            <div>
+            <div className={styles.titleBox}>
               <h3>4월 지역별 배려 차량 수</h3>
             </div>
             <div className={styles.charBox}>
               <Chart
-                  options={props.options}
-                  series={props.series}
+                  options={viewData.options}
+                  series={viewData.series}
                   type="bar"
                   height="100%"
                   width="100%"
