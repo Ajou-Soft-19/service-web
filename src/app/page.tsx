@@ -187,6 +187,7 @@ export default function Home() {
               </div>
             </div>
 
+        <div className={styles.contour} />
         <div className={styles.monthBox}>
           <div className={styles.monthInnerBox}>
             <div className={styles.titleBox}>
