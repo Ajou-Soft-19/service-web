@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   min-height: 100vh;
+  background: whitesmoke;
 }
 
 .header {
@@ -13,13 +14,17 @@
   flex-direction: column;
   justify-content: center;
   padding-left: 24px;
-  background: cadetblue;
+  background: darkblue;
+}
+
+.header h2 {
+  color: whitesmoke;
 }
 
 .highBox {
   width: 100vw;
-  height: 100vh;
-  background: bisque;
+  height: 92vh;
+  /*background: bisque;*/
 }
 
 .highInnerBox {
@@ -29,13 +34,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: greenyellow;
+  /*background: greenyellow;*/
 }
 
 .monthBox {
   width: 100vw;
   height: 100vh;
-  background: pink;
+  /*background: pink;*/
 }
 
 .monthInnerBox {
@@ -43,26 +48,115 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  background: yellowgreen;
+  /*background: yellowgreen;*/
   flex-direction: column;
   align-items: center;
 }
 
 .charBox {
-  width:  100%;
-  height: 100%;
-  background: pink;
+  width:  70%;
+  height: 70%;
+  /*background: pink;*/
 }
 
 .titleBox {
   width: 100%;
-  height: 52px;
-  background: bisque;
+  height: 82px;
+  /*background: bisque;*/
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .titleBox h3 {
-  font-size: 24px;
+  font-size: 44px;
 }
+
+.podiumBox {
+  width:  70%;
+  height: 70%;
+  /*background: paleturquoise;*/
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: center;
+}
+
+.podium2 {
+  height: 300px;
+  background: lightyellow;
+  animation: podiumAnimation2 1s ease-in-out forwards;
+}
+
+.podium1 {
+  height: 400px;
+  animation: podiumAnimation1 1s ease-in-out forwards;
+  background: indianred;
+}
+
+.podium3 {
+  height: 250px;
+  animation: podiumAnimation3 1s ease-in-out forwards;
+  background: dodgerblue;
+}
+
+.podiumContainer {
+  width: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+@keyframes podiumAnimation1 {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 400px; /* 1등 시상대의 높이 */
+    opacity: 1;
+  }
+}
+
+@keyframes podiumAnimation2 {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 300px; /* 2등 시상대의 높이 */
+    opacity: 1;
+  }
+}
+
+@keyframes podiumAnimation3 {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: 200px; /* 3등 시상대의 높이 */
+    opacity: 1;
+  }
+}
+
+.podium {
+  animation-delay: 2.1s, 480ms;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 42px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.podiumTarget {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 32px;
+  font-size: 52px;
+  font-weight: bold;
+}
+

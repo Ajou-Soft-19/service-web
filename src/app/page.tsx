@@ -10,6 +10,11 @@ export interface BarChartProps {
     },
     xaxis: {
       categories: number[];
+      // tickPlacement: 'on';
+    },
+    // title: string;
+    noData: {
+      text: string;
     }
   },
   series: [
@@ -17,7 +22,17 @@ export interface BarChartProps {
       name: string;
       data: number[];
     }
-  ]
+  ],
+  plotOptions: {
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: '42px';
+        colors: ['#333'];
+      },
+      offsetX: 30;
+    },
+  },
 }
 interface dataProps {
   "year": number,
@@ -31,15 +46,30 @@ const data: BarChartProps =  {
       id: "basic-bar"
     },
     xaxis: {
-      categories: []
+      categories: [],
+      // tickPlacement: 'on',
+    },
+    noData: {
+      text: 'Loading...'
     }
+    // title: ''
   },
   series: [
     {
       name: "series-1",
       data: []
     }
-  ]
+  ],
+  plotOptions: {
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: '42px',
+        colors: ['#333']
+      },
+      offsetX: 30
+    },
+  },
 };
 
 const serverData: dataProps[] = [
@@ -112,7 +142,7 @@ export default function Home() {
     data2.options.xaxis.categories = categories;
     data2.series[0].data = series_data
     setTop3Data(data2);
-  }, [])
+    }, [])
 
   return (
       <main className={styles.main}>
@@ -123,16 +153,36 @@ export default function Home() {
             <div className={styles.highBox}>
               <div className={styles.highInnerBox}>
                 <div className={styles.titleBox}>
-                  <h3>4월 상위 3개 지역</h3>
+                  <h3>2024년 상위 3개 월</h3>
                 </div>
-                <div className={styles.charBox}>
-                  <Chart
-                      options={top3Data.options}
-                      series={top3Data.series}
-                      type="bar"
-                      height="100%"
-                      width="100%"
-                  />
+                <div className={styles.podiumBox}>
+                  <div className={styles.podiumContainer}>
+                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[1]}</div>
+                    <div className={`${styles.podium} ${styles.podium2}`}>
+                      <span>2</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.podiumContainer}>
+                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[0]}</div>
+                    <div className={`${styles.podium} ${styles.podium1}`}>
+                      <span>1</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.podiumContainer}>
+                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[2]}</div>
+                    <div className={`${styles.podium} ${styles.podium3}`}>
+                      <span>3</span>
+                    </div>
+                  </div>
+                  {/*<Chart*/}
+                  {/*    options={top3Data.options}*/}
+                  {/*    series={top3Data.series}*/}
+                  {/*    type="bar"*/}
+                  {/*    height="100%"*/}
+                  {/*    width="100%"*/}
+                  {/*/>*/}
                 </div>
               </div>
             </div>
@@ -140,7 +190,7 @@ export default function Home() {
         <div className={styles.monthBox}>
           <div className={styles.monthInnerBox}>
             <div className={styles.titleBox}>
-              <h3>4월 지역별 배려 차량 수</h3>
+              <h3>2024년 월별</h3>
             </div>
             <div className={styles.charBox}>
               <Chart
