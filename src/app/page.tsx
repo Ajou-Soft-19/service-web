@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from 'react'
 import Graph from "@/components/Graph";
 import Link from 'next/link';
-import {Region} from "@/type";
+import {Region} from "@/type/type";
 
 export interface RegionCountInterface {
   region: Region;
