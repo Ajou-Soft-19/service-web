@@ -1,7 +1,8 @@
 'use client'
 import styles from "./page.module.css";
 import Chart from "react-apexcharts";
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react';
+import Map from './components/map';
 
 export interface BarChartProps {
   options: {
@@ -204,6 +205,16 @@ export default function Home() {
             </div>
           </div>
         </div>
+      <div className={styles.contour} />
+        <div className={styles.mapInnerBox}>
+          <div className={styles.titleBox}>
+            <h3>지도</h3>
+          </div>
+        </div>
+        <div className={styles.mapBox}>
+            <Map />
+        </div>
+
       </main>
   );
 }
