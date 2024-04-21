@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Region, RegionCountInterface} from "@/app/page";
+import {RegionCountInterface} from "@/app/page";
 
 export interface GraphProps {
     regionSupporters : RegionCountInterface[];
