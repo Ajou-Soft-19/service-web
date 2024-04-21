@@ -1,209 +1,157 @@
 'use client'
-import styles from "./page.module.css";
-import Chart from "react-apexcharts";
+
 import React, {useEffect, useState} from 'react'
+import Graph from "@/components/Graph";
+import Link from 'next/link';
 
-export interface BarChartProps {
-  options: {
-    chart: {
-      id: string;
-    },
-    xaxis: {
-      categories: number[];
-      // tickPlacement: 'on';
-    },
-    // title: string;
-    noData: {
-      text: string;
-    }
-  },
-  series: [
-    {
-      name: string;
-      data: number[];
-    }
-  ],
-  plotOptions: {
-    dataLabels: {
-      enabled: true,
-      style: {
-        fontSize: '42px';
-        colors: ['#333'];
-      },
-      offsetX: 30;
-    },
-  },
-}
-interface dataProps {
-  "year": number,
-  "month": number,
-  "count": number
+export enum Region {
+  SEOUL = "서울특별시",
+  BUSAN = "부산광역시",
+  DAEGU = "대구광역시",
+  INCHEON = "인천광역시",
+  GWANGJU = "광주광역시",
+  DAEJEON = "대전광역시",
+  ULSAN = "울산광역시",
+  SEJONG = "세종특별자치시",
+  GYEONGGI = "경기도",
+  GANGWON = "강원특별자치도",
+  CHUNGBUK = "충청북도",
+  CHUNGNAM = "충청남도",
+  JEONBUK = "전북특별자치도",
+  JEONNAM = "전라남도",
+  GYEONGBUK = "경상북도",
+  GYEONGNAM = "경상남도",
+  JEJU = "제주특별자치도",
+  UNKNOWN = "미확인"
 }
 
-const data: BarChartProps =  {
-  options: {
-    chart: {
-      id: "basic-bar"
-    },
-    xaxis: {
-      categories: [],
-      // tickPlacement: 'on',
-    },
-    noData: {
-      text: 'Loading...'
-    }
-    // title: ''
-  },
-  series: [
-    {
-      name: "series-1",
-      data: []
-    }
-  ],
-  plotOptions: {
-    dataLabels: {
-      enabled: true,
-      style: {
-        fontSize: '42px',
-        colors: ['#333']
-      },
-      offsetX: 30
-    },
-  },
-};
+export interface RegionCountInterface {
+  region: Region;
+  count: number;
+  percent: number;
+}
+export interface CountResultInterface {
+  regionSupporters : RegionCountInterface[];
+  totalEventCount: number;
+}
 
-const serverData: dataProps[] = [
-  {
-    "year": 2024,
-    "month": 1,
-    "count": 35,
-  },
-  {
-    "year": 2024,
-    "month": 2,
-    "count": 325,
-  },
-  {
-    "year": 2024,
-    "month": 3,
-    "count": 125,
-  },
-  {
-    "year": 2024,
-    "month": 4,
-    "count": 523,
-  },
-]
+const initCountData: CountResultInterface = {
+  "regionSupporters": [
+    {
+      "region": Region.UNKNOWN,
+      "count": 0,
+      "percent": 0
+    },
+    {
+      "region": Region.UNKNOWN,
+      "count": 0,
+      "percent": 0
+    },
+    {
+      "region": Region.UNKNOWN,
+      "count": 0,
+      "percent": 0
+    },
+  ],
+  "totalEventCount": 0
+}
+
 
 export default function Home() {
   const TITLE = 'EPAS';
-  const [top3Data, setTop3Data] = useState(data);
-  const [viewData, setViewData] = useState(data);
+  const currentDate: Date = new Date();
+  const currentYear: number = currentDate.getFullYear();
+  const currentMonth: number = currentDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 +1 해줍니다.
+
+  const [countData, setCountData] = useState(initCountData);
+
+  const requestURL = `https://ajou-epas.xyz:7001/api/supporter/count?year=${currentYear}&month=${currentMonth}`;
 
   useEffect(() => {
-    /* API Request */
-    let datas: number[][] = [];
-    serverData.map((d) => {
-      datas.push([d.month, d.count]);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await fetch(requestURL);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const jsonData = await response.json();
+        console.log(jsonData)
+        setCountData(jsonData.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-    let categories: number[] = [];
-    let series_data: number[] = [];
+    fetchData();
 
-    datas.forEach((d) => {
-      categories.push(d[0]);
-      series_data.push(d[1]);
-    })
+  }, []);
 
-    data.options.xaxis.categories = categories;
-    data.series[0].data = series_data;
-    setViewData(data);
+  useEffect(() => {
 
-    datas.sort((a, b) => {
-      return b[1] - a[1];
-    });
-
-    const datas2: number[][] = datas.slice(0, 3);
-
-    const temp = datas2[0];
-    datas2[0] = datas2[1];
-    datas2[1] = temp;
-
-    categories = [];
-    series_data = [];
-
-    datas2.forEach((d) => {
-      categories.push(d[0]);
-      series_data.push(d[1]);
-    })
-
-    const data2 = JSON.parse(JSON.stringify(data));
-
-    data2.options.xaxis.categories = categories;
-    data2.series[0].data = series_data
-    setTop3Data(data2);
-    }, [])
+  },[countData]);
 
   return (
-      <main className={styles.main}>
-        <div className={styles.header}>
-          <h2>{TITLE}</h2>
-        </div>
+      <div className="flex flex-col min-h-screen">
+        <header className="bg-[#0016A6] text-white py-4 px-6">
+          <div className="container mx-auto flex items-center justify-between">
+            <Link href="/">
+              <h1 className=":hover cursor-pointer text-2xl font-bold">{TITLE}</h1>
+            </Link>
+          </div>
+        </header>
+        <main className="flex-1 bg-gray-100 py-8">
+          <div className="container mx-auto">
+            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h2 className="text-2xl font-bold mb-4">Top 3 Regions</h2>
+              <div className="flex justify-center"
+                style={{
+                  alignItems: "end"
+                }}>
 
-            <div className={styles.highBox}>
-              <div className={styles.highInnerBox}>
-                <div className={styles.titleBox}>
-                  <h3>2024년 상위 3개 월</h3>
+                <div className="w-20 md:w-32 flex flex-col items-center">
+                  {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">2nd</div>*/}
+                  <span className={"font-bold text-blue-800 text-xl"}>{countData.regionSupporters[1].region}</span>
+                  <div className="w-20 h-[80px] md:w-32 md:h-[200px] bg-[#0016A6] rounded-t-lg relative">
+                    {/*<div className="absolute bottom-0 w-full h-4/5 bg-[#0016A6]" />*/}
+                  </div>
+                  <div className="w-18  mt-2 text-center md:w-28 bg-[#0016A6] text-white font-bold py-2 px-4 rounded-lg">2nd</div>
+
+                  {/*<span className={"font-bold text-blue-800 text-xl"}>ew</span>*/}
                 </div>
-                <div className={styles.podiumBox}>
-                  <div className={styles.podiumContainer}>
-                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[1]}</div>
-                    <div className={`${styles.podium} ${styles.podium2}`}>
-                      <span>2</span>
-                    </div>
-                  </div>
 
-                  <div className={styles.podiumContainer}>
-                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[0]}</div>
-                    <div className={`${styles.podium} ${styles.podium1}`}>
-                      <span>1</span>
-                    </div>
+                <div className="w-20 md:w-32 flex flex-col items-center">
+                  {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">1st</div>*/}
+                  <span className={"font-bold text-blue-800 text-xl"}>{countData.regionSupporters[0].region}</span>
+                  <div className="w-20 h-[100px] md:w-32 md:h-[300px] bg-[#0016A6] rounded-t-lg relative">
+                    {/*<div className="absolute bottom-0 w-full h-full bg-[#0016A6]" />*/}
                   </div>
+                  <div className="w-18  mt-2 text-center md:w-28 bg-[#0016A6] text-white font-bold py-2 px-4 rounded-lg">1st</div>
 
-                  <div className={styles.podiumContainer}>
-                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[2]}</div>
-                    <div className={`${styles.podium} ${styles.podium3}`}>
-                      <span>3</span>
-                    </div>
+                  {/*<span className={"font-bold text-blue-800 text-xl"}>ew</span>*/}
+                </div>
+
+                <div className="w-20 md:w-32 flex flex-col items-center">
+                  {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">3rd</div>*/}
+                  <span className={"font-bold text-blue-800 text-xl"}>{countData.regionSupporters[2].region}</span>
+                  <div className="w-20 h-[50px] md:w-32 md:h-[100px] bg-[#0016A6] rounded-t-lg relative">
+                    {/*<div className="absolute bottom-0 w-full h-3/4 bg-[#0016A6]" />*/}
                   </div>
-                  {/*<Chart*/}
-                  {/*    options={top3Data.options}*/}
-                  {/*    series={top3Data.series}*/}
-                  {/*    type="bar"*/}
-                  {/*    height="100%"*/}
-                  {/*    width="100%"*/}
-                  {/*/>*/}
+                  <div className="w-18 mt-2 text-center md:w-28 bg-[#0016A6] text-white font-bold py-2 px-4 rounded-lg">3rd</div>
+                  {/*<span className={"font-bold text-blue-800 text-xl"}>ew</span>*/}
                 </div>
               </div>
             </div>
+            <Graph regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount} />
 
-        <div className={styles.contour} />
-        <div className={styles.monthBox}>
-          <div className={styles.monthInnerBox}>
-            <div className={styles.titleBox}>
-              <h3>2024년 월별</h3>
-            </div>
-            <div className={styles.charBox}>
-              <Chart
-                  options={viewData.options}
-                  series={viewData.series}
-                  type="bar"
-                  height="100%"
-                  width="100%"
-              />
-            </div>
           </div>
-        </div>
-      </main>
+        </main>
+        <footer className="bg-[#0016A6] text-white py-4">
+          <div className="container mx-auto text-center">
+            <p>/© 2023 EPAS. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
   );
 }
+
+
