@@ -127,7 +127,7 @@ export default function Home() {
         </main>
         <footer className="bg-[#0016A6] text-white py-4">
           <div className="container mx-auto text-center">
-            <p>© 2023 EPAS. All rights reserved.</p>
+            <p>© 2024 EPAS. All rights reserved.</p>
           </div>
         </footer>
       </div>
