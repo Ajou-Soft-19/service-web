@@ -90,7 +90,7 @@ export default function Home() {
 
                 <div className="w-20 md:w-32 flex flex-col items-center">
                   {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">2nd</div>*/}
-                  <span className={"font-bold text-blue-800 text-xl"}>{countData.regionSupporters[1].region}</span>
+                  <span className={"font-bold text-blue-800 md:text-xl text-xs mb-2"}>{countData.regionSupporters[1].region}</span>
                   <div className="w-20 h-[80px] md:w-32 md:h-[200px] bg-[#0016A6] rounded-t-lg relative">
                     {/*<div className="absolute bottom-0 w-full h-4/5 bg-[#0016A6]" />*/}
                   </div>
@@ -101,7 +101,7 @@ export default function Home() {
 
                 <div className="w-20 md:w-32 flex flex-col items-center">
                   {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">1st</div>*/}
-                  <span className={"font-bold text-blue-800 text-xl"}>{countData.regionSupporters[0].region}</span>
+                  <span className={"font-bold text-blue-800 md:text-xl text-xs mb-2"}>{countData.regionSupporters[0].region}</span>
                   <div className="w-20 h-[100px] md:w-32 md:h-[300px] bg-[#0016A6] rounded-t-lg relative">
                     {/*<div className="absolute bottom-0 w-full h-full bg-[#0016A6]" />*/}
                   </div>
@@ -112,7 +112,7 @@ export default function Home() {
 
                 <div className="w-20 md:w-32 flex flex-col items-center">
                   {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">3rd</div>*/}
-                  <span className={"font-bold text-blue-800 text-xl"}>{countData.regionSupporters[2].region}</span>
+                  <span className={"font-bold text-blue-800 md:text-xl text-xs mb-2"}>{countData.regionSupporters[2].region}</span>
                   <div className="w-20 h-[50px] md:w-32 md:h-[100px] bg-[#0016A6] rounded-t-lg relative">
                     {/*<div className="absolute bottom-0 w-full h-3/4 bg-[#0016A6]" />*/}
                   </div>
