@@ -73,9 +73,9 @@ export default function Home() {
   return (
       <div className="flex flex-col min-h-screen">
         <header className="bg-[#0016A6] text-white py-4 px-6">
-          <div className="container mx-auto flex items-center justify-between">
+          <div className="container mx-0 px-0">
             <Link href="/">
-              <h1 className=":hover cursor-pointer text-2xl font-bold">{TITLE}</h1>
+              <h1 className=":hover cursor-pointer text-2xl font-bol">{TITLE}</h1>
             </Link>
           </div>
         </header>
