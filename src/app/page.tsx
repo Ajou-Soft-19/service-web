@@ -113,7 +113,7 @@ export default function Home() {
                 <div className="w-20 md:w-32 flex flex-col items-center">
                   {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">3rd</div>*/}
                   <span className={"font-bold text-blue-800 md:text-xl text-xs mb-2"}>{countData.regionSupporters[2].region}</span>
-                  <div className="w-20 h-[50px] md:w-32 md:h-[100px] bg-[#0016A6] rounded-t-lg relative">
+                  <div className="w-20 h-[50px] md:w-32 md:h-[150px] bg-[#0016A6] rounded-t-lg relative">
                     {/*<div className="absolute bottom-0 w-full h-3/4 bg-[#0016A6]" />*/}
                   </div>
                   <div className="w-18 mt-2 text-center md:w-28 bg-[#0016A6] text-white font-bold py-2 px-4 rounded-lg">3rd</div>
@@ -127,7 +127,7 @@ export default function Home() {
         </main>
         <footer className="bg-[#0016A6] text-white py-4">
           <div className="container mx-auto text-center">
-            <p>/© 2023 EPAS. All rights reserved.</p>
+            <p>© 2023 EPAS. All rights reserved.</p>
           </div>
         </footer>
       </div>
