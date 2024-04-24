@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 import Link from 'next/link';
 import Graph from "../components/Graph";
 import {Region} from "../enums/Region.enum";
+import TopRegions from '../components/TopRegion';
 
 export interface RegionCountInterface {
   region: Region;
@@ -71,67 +72,30 @@ export default function Home() {
   },[countData]);
 
   return (
-      <div className="flex flex-col min-h-screen">
-        <header className="bg-[#0016A6] text-white py-4 px-6">
-          <div className="container mx-0 px-0">
-            <Link href="/">
-              <h1 className=":hover cursor-pointer text-2xl font-bol">{TITLE}</h1>
-            </Link>
-          </div>
-        </header>
-        <main className="flex-1 bg-gray-100 py-8">
-          <div className="container mx-auto">
-            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-              <h2 className="text-2xl font-bold mb-4">Top 3 Regions</h2>
-              <div className="flex justify-center"
-                style={{
-                  alignItems: "end"
-                }}>
-
-                <div className="w-20 md:w-32 flex flex-col items-center">
-                  {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">2nd</div>*/}
-                  <span className={"font-bold text-blue-800 md:text-xl text-xs mb-2"}>{countData.regionSupporters[1].region}</span>
-                  <div className="w-20 h-[80px] md:w-32 md:h-[200px] bg-[#0016A6] rounded-t-lg relative">
-                    {/*<div className="absolute bottom-0 w-full h-4/5 bg-[#0016A6]" />*/}
-                  </div>
-                  <div className="w-18  mt-2 text-center md:w-28 bg-[#0016A6] text-white font-bold py-2 px-4 rounded-lg">2nd</div>
-
-                  {/*<span className={"font-bold text-blue-800 text-xl"}>ew</span>*/}
-                </div>
-
-                <div className="w-20 md:w-32 flex flex-col items-center">
-                  {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">1st</div>*/}
-                  <span className={"font-bold text-blue-800 md:text-xl text-xs mb-2"}>{countData.regionSupporters[0].region}</span>
-                  <div className="w-20 h-[100px] md:w-32 md:h-[300px] bg-[#0016A6] rounded-t-lg relative">
-                    {/*<div className="absolute bottom-0 w-full h-full bg-[#0016A6]" />*/}
-                  </div>
-                  <div className="w-18  mt-2 text-center md:w-28 bg-[#0016A6] text-white font-bold py-2 px-4 rounded-lg">1st</div>
-
-                  {/*<span className={"font-bold text-blue-800 text-xl"}>ew</span>*/}
-                </div>
-
-                <div className="w-20 md:w-32 flex flex-col items-center">
-                  {/*<div className="bg-[#0016A6] text-white font-bold py-2 px-4 rounded-t-lg">3rd</div>*/}
-                  <span className={"font-bold text-blue-800 md:text-xl text-xs mb-2"}>{countData.regionSupporters[2].region}</span>
-                  <div className="w-20 h-[50px] md:w-32 md:h-[150px] bg-[#0016A6] rounded-t-lg relative">
-                    {/*<div className="absolute bottom-0 w-full h-3/4 bg-[#0016A6]" />*/}
-                  </div>
-                  <div className="w-18 mt-2 text-center md:w-28 bg-[#0016A6] text-white font-bold py-2 px-4 rounded-lg">3rd</div>
-                  {/*<span className={"font-bold text-blue-800 text-xl"}>ew</span>*/}
-                </div>
-              </div>
-            </div>
-            <Graph regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount} />
-
-          </div>
-        </main>
-        <footer className="bg-[#0016A6] text-white py-4">
-          <div className="container mx-auto text-center">
-            <p>© 2024 EPAS. All rights reserved.</p>
-          </div>
-        </footer>
+  <div className="flex flex-col min-h-screen">
+    <header className="bg-[#3346BD] text-white py-3 px-6">
+      <div className="container mx-0 px-0">
+        <Link href="/">
+          <h1 className=":hover cursor-pointer text-xl font-bold">{TITLE}</h1>
+        </Link>
       </div>
-  );
+    </header>
+    <main className="flex-1 bg-gray-100 py-8">
+      <div className="container mx-auto">
+        <div>
+          <TopRegions countData={countData} />
+        </div>
+        <Graph regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount} />
+      </div>
+    </main>
+    <footer className="bg-[#3346BD] text-white py-3">
+      <div className="container mx-auto text-center">
+        <p>© 2024 EPAS. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+);
+
 }
 
 
