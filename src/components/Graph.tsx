@@ -19,7 +19,7 @@ const Graph = ({regionSupporters, totalEventCount}: GraphProps) => {
     useEffect(() => {
     const data: number[] = [];
     regionSupporters.forEach((v) => data.push(v.count));
-        const newMaxValue = Math.max(...data, 1); // 최소값을 1로 설정하여 0으로 나누는 것을 방지
+        const newMaxValue = Math.max(...data, 1);
         setMaxValue(newMaxValue);
     }, [regionSupporters]);
 
@@ -38,7 +38,7 @@ const Graph = ({regionSupporters, totalEventCount}: GraphProps) => {
     return (
         <>
         <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold mb-4">👏 Supporters Count</h2>
+            <h2 className="text-2xl font-bold text-black mb-4">👏 Supporters Count</h2>
             <div className="grid grid-cols-1 gap-4">
                 {graphData.map((data: RegionCountInterface, index) => (
                     <div key={index} className="flex items-center">
