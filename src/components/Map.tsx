@@ -46,7 +46,7 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
     const initMap = async () => {
         console.log(cities);
         const loader = new Loader({
-            apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
+            apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
             version: "weekly",
         });
 
@@ -61,7 +61,7 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
             zoomControl: false
         };
 
-        const map = new google.maps.Map(mapRef.current, mapOptions);
+        const map = new google.maps.Map(mapRef.current!, mapOptions);
         const topRegions = regionSupporters.slice(0, 3).map(rs => Region[rs.region as unknown as keyof typeof Region]);
         const colors = ['#FFD700', '#585858', '#CD7F32'];
         console.log(topRegions);
