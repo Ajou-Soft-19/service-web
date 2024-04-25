@@ -1,4 +1,9 @@
 'use client'
+import styles from "./page.module.css";
+import Chart from "react-apexcharts";
+import React, {useEffect, useState} from 'react';
+import Map from './components/map';
+
 
 import React, {useEffect, useState} from 'react'
 import Link from 'next/link';
@@ -87,6 +92,14 @@ export default function Home() {
         </div>
         <Graph regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount} />
       </div>
+      <div className={styles.mapInnerBox}>
+          <div className={styles.titleBox}>
+            <h3>지도</h3>
+          </div>
+        </div>
+        <div className={styles.mapBox}>
+            <Map />
+        </div>
     </main>
     <footer className="bg-[#3346BD] text-white py-3">
       <div className="container mx-auto text-center">
@@ -96,6 +109,72 @@ export default function Home() {
   </div>
 );
 
+// //             <div className={styles.highBox}>
+// //               <div className={styles.highInnerBox}>
+// //                 <div className={styles.titleBox}>
+// //                   <h3>2024년 상위 3개 월</h3>
+// //                 </div>
+// //                 <div className={styles.podiumBox}>
+// //                   <div className={styles.podiumContainer}>
+// //                     <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[1]}</div>
+// //                     <div className={`${styles.podium} ${styles.podium2}`}>
+// //                       <span>2</span>
+// //                     </div>
+// //                   </div>
+
+// //                   <div className={styles.podiumContainer}>
+// //                     <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[0]}</div>
+// //                     <div className={`${styles.podium} ${styles.podium1}`}>
+// //                       <span>1</span>
+// //                     </div>
+// //                   </div>
+
+// //                   <div className={styles.podiumContainer}>
+// //                     <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[2]}</div>
+// //                     <div className={`${styles.podium} ${styles.podium3}`}>
+// //                       <span>3</span>
+// //                     </div>
+// //                   </div>
+// //                   {/*<Chart*/}
+// //                   {/*    options={top3Data.options}*/}
+// //                   {/*    series={top3Data.series}*/}
+// //                   {/*    type="bar"*/}
+// //                   {/*    height="100%"*/}
+// //                   {/*    width="100%"*/}
+// //                   {/*/>*/}
+// //                 </div>
+// //               </div>
+// //             </div>
+
+// //         <div className={styles.contour} />
+// //         <div className={styles.monthBox}>
+// //           <div className={styles.monthInnerBox}>
+// //             <div className={styles.titleBox}>
+// //               <h3>2024년 월별</h3>
+// //             </div>
+// //             <div className={styles.charBox}>
+// //               <Chart
+// //                   options={viewData.options}
+// //                   series={viewData.series}
+// //                   type="bar"
+// //                   height="100%"
+// //                   width="100%"
+// //               />
+// //             </div>
+// //           </div>
+// //         </div>
+// //       <div className={styles.contour} />
+// //         <div className={styles.mapInnerBox}>
+// //           <div className={styles.titleBox}>
+// //             <h3>지도</h3>
+// //           </div>
+// //         </div>
+// //         <div className={styles.mapBox}>
+// //             <Map />
+// //         </div>
+
+// //       </main>
+  );
 }
 
 
