@@ -77,7 +77,7 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
                 color = '#0040FF';
                 opacity = 0.1;
             }
-            new google.maps.Polygon({
+            const cityPolygon = new google.maps.Polygon({
                 paths: city.coordinates,
                 strokeColor: color,
                 strokeOpacity: opacity,
@@ -85,6 +85,16 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
                 fillColor: color,
                 fillOpacity: opacity,
                 map: map,
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<h3>${city.korName}</h3>`,
+            });
+
+            // 폴리곤 클릭 이벤트 리스너 추가
+            cityPolygon.addListener('click', (event: { latLng: any; }) => {
+                infoWindow.setPosition(event.latLng);
+                infoWindow.open(map);
             });
         });
     };
