@@ -1,6 +1,5 @@
 'use client'
 import styles from "./page.module.css";
-import Chart from "react-apexcharts";
 import React, {useEffect, useState} from 'react';
 import Map from '../components/Map';
 import Link from 'next/link';
