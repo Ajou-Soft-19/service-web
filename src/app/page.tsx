@@ -86,8 +86,14 @@ export default function Home() {
           <div>
             <Graph regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount} />
           </div>
-          <div style={{ paddingTop: '32px' }}>
-            <Map regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount}/>
+
+          <div className="mt-[32px]">
+            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+              <h2 className="text-2xl font-bold mb-4">🗺 Map with Top 3 Supporters</h2>
+              <div className="flex justify-center" style={{ alignItems: "end" }}>
+                <Map regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount}/>
+              </div>
+            </div>
           </div>
         </div>
       </main>
