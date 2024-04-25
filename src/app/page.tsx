@@ -4,209 +4,95 @@ import Chart from "react-apexcharts";
 import React, {useEffect, useState} from 'react';
 import Map from './components/map';
 
-export interface BarChartProps {
-  options: {
-    chart: {
-      id: string;
-    },
-    xaxis: {
-      categories: number[];
-      // tickPlacement: 'on';
-    },
-    // title: string;
-    noData: {
-      text: string;
-    }
-  },
-  series: [
-    {
-      name: string;
-      data: number[];
-    }
-  ],
-  plotOptions: {
-    dataLabels: {
-      enabled: true,
-      style: {
-        fontSize: '42px';
-        colors: ['#333'];
-      },
-      offsetX: 30;
-    },
-  },
+
+import React, {useEffect, useState} from 'react'
+import Link from 'next/link';
+import Graph from "../components/Graph";
+import {Region} from "../enums/Region.enum";
+import TopRegions from '../components/TopRegion';
+
+export interface RegionCountInterface {
+  region: Region;
+  count: number;
+  percent: number;
 }
-interface dataProps {
-  "year": number,
-  "month": number,
-  "count": number
+export interface CountResultInterface {
+  regionSupporters : RegionCountInterface[];
+  totalEventCount: number;
 }
 
-const data: BarChartProps =  {
-  options: {
-    chart: {
-      id: "basic-bar"
-    },
-    xaxis: {
-      categories: [],
-      // tickPlacement: 'on',
-    },
-    noData: {
-      text: 'Loading...'
-    }
-    // title: ''
-  },
-  series: [
+const initCountData: CountResultInterface = {
+  "regionSupporters": [
     {
-      name: "series-1",
-      data: []
-    }
-  ],
-  plotOptions: {
-    dataLabels: {
-      enabled: true,
-      style: {
-        fontSize: '42px',
-        colors: ['#333']
-      },
-      offsetX: 30
+      "region": Region.UNKNOWN,
+      "count": 0,
+      "percent": 0
     },
-  },
-};
+    {
+      "region": Region.UNKNOWN,
+      "count": 0,
+      "percent": 0
+    },
+    {
+      "region": Region.UNKNOWN,
+      "count": 0,
+      "percent": 0
+    },
+  ],
+  "totalEventCount": 0
+}
 
-const serverData: dataProps[] = [
-  {
-    "year": 2024,
-    "month": 1,
-    "count": 35,
-  },
-  {
-    "year": 2024,
-    "month": 2,
-    "count": 325,
-  },
-  {
-    "year": 2024,
-    "month": 3,
-    "count": 125,
-  },
-  {
-    "year": 2024,
-    "month": 4,
-    "count": 523,
-  },
-]
 
 export default function Home() {
   const TITLE = 'EPAS';
-  const [top3Data, setTop3Data] = useState(data);
-  const [viewData, setViewData] = useState(data);
+  const currentDate: Date = new Date();
+  const currentYear: number = currentDate.getFullYear();
+  const currentMonth: number = currentDate.getMonth() + 1; // getMonth()는 0부터 시작하므로 +1 해줍니다.
+
+  const [countData, setCountData] = useState(initCountData);
+
+  const requestURL = `https://ajou-epas.xyz:7001/api/supporter/count?year=${currentYear}&month=${currentMonth}`;
 
   useEffect(() => {
-    /* API Request */
-    let datas: number[][] = [];
-    serverData.map((d) => {
-      datas.push([d.month, d.count]);
-    });
+    const fetchData = async () => {
+      try {
+        const response = await fetch(requestURL);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const jsonData = await response.json();
+        // console.log(jsonData)
+        setCountData(jsonData.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-    let categories: number[] = [];
-    let series_data: number[] = [];
+    fetchData();
 
-    datas.forEach((d) => {
-      categories.push(d[0]);
-      series_data.push(d[1]);
-    })
+  }, []);
 
-    data.options.xaxis.categories = categories;
-    data.series[0].data = series_data;
-    setViewData(data);
+  useEffect(() => {
 
-    datas.sort((a, b) => {
-      return b[1] - a[1];
-    });
-
-    const datas2: number[][] = datas.slice(0, 3);
-
-    const temp = datas2[0];
-    datas2[0] = datas2[1];
-    datas2[1] = temp;
-
-    categories = [];
-    series_data = [];
-
-    datas2.forEach((d) => {
-      categories.push(d[0]);
-      series_data.push(d[1]);
-    })
-
-    const data2 = JSON.parse(JSON.stringify(data));
-
-    data2.options.xaxis.categories = categories;
-    data2.series[0].data = series_data
-    setTop3Data(data2);
-    }, [])
+  },[countData]);
 
   return (
-      <main className={styles.main}>
-        <div className={styles.header}>
-          <h2>{TITLE}</h2>
+  <div className="flex flex-col min-h-screen">
+    <header className="bg-[#3346BD] text-white py-3 px-6">
+      <div className="container mx-0 px-0">
+        <Link href="/">
+          <h1 className=":hover cursor-pointer text-xl font-bold">{TITLE}</h1>
+        </Link>
+      </div>
+    </header>
+    <main className="flex-1 bg-gray-100 py-8">
+      <div className="container mx-auto">
+        <div>
+          <TopRegions countData={countData} />
         </div>
-
-            <div className={styles.highBox}>
-              <div className={styles.highInnerBox}>
-                <div className={styles.titleBox}>
-                  <h3>2024년 상위 3개 월</h3>
-                </div>
-                <div className={styles.podiumBox}>
-                  <div className={styles.podiumContainer}>
-                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[1]}</div>
-                    <div className={`${styles.podium} ${styles.podium2}`}>
-                      <span>2</span>
-                    </div>
-                  </div>
-
-                  <div className={styles.podiumContainer}>
-                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[0]}</div>
-                    <div className={`${styles.podium} ${styles.podium1}`}>
-                      <span>1</span>
-                    </div>
-                  </div>
-
-                  <div className={styles.podiumContainer}>
-                    <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[2]}</div>
-                    <div className={`${styles.podium} ${styles.podium3}`}>
-                      <span>3</span>
-                    </div>
-                  </div>
-                  {/*<Chart*/}
-                  {/*    options={top3Data.options}*/}
-                  {/*    series={top3Data.series}*/}
-                  {/*    type="bar"*/}
-                  {/*    height="100%"*/}
-                  {/*    width="100%"*/}
-                  {/*/>*/}
-                </div>
-              </div>
-            </div>
-
-        <div className={styles.contour} />
-        <div className={styles.monthBox}>
-          <div className={styles.monthInnerBox}>
-            <div className={styles.titleBox}>
-              <h3>2024년 월별</h3>
-            </div>
-            <div className={styles.charBox}>
-              <Chart
-                  options={viewData.options}
-                  series={viewData.series}
-                  type="bar"
-                  height="100%"
-                  width="100%"
-              />
-            </div>
-          </div>
-        </div>
-      <div className={styles.contour} />
-        <div className={styles.mapInnerBox}>
+        <Graph regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount} />
+      </div>
+      <div className={styles.mapInnerBox}>
           <div className={styles.titleBox}>
             <h3>지도</h3>
           </div>
@@ -214,7 +100,81 @@ export default function Home() {
         <div className={styles.mapBox}>
             <Map />
         </div>
+    </main>
+    <footer className="bg-[#3346BD] text-white py-3">
+      <div className="container mx-auto text-center">
+        <p>© 2024 EPAS. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+);
 
-      </main>
+// //             <div className={styles.highBox}>
+// //               <div className={styles.highInnerBox}>
+// //                 <div className={styles.titleBox}>
+// //                   <h3>2024년 상위 3개 월</h3>
+// //                 </div>
+// //                 <div className={styles.podiumBox}>
+// //                   <div className={styles.podiumContainer}>
+// //                     <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[1]}</div>
+// //                     <div className={`${styles.podium} ${styles.podium2}`}>
+// //                       <span>2</span>
+// //                     </div>
+// //                   </div>
+
+// //                   <div className={styles.podiumContainer}>
+// //                     <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[0]}</div>
+// //                     <div className={`${styles.podium} ${styles.podium1}`}>
+// //                       <span>1</span>
+// //                     </div>
+// //                   </div>
+
+// //                   <div className={styles.podiumContainer}>
+// //                     <div className={styles.podiumTarget}>{top3Data.options.xaxis.categories[2]}</div>
+// //                     <div className={`${styles.podium} ${styles.podium3}`}>
+// //                       <span>3</span>
+// //                     </div>
+// //                   </div>
+// //                   {/*<Chart*/}
+// //                   {/*    options={top3Data.options}*/}
+// //                   {/*    series={top3Data.series}*/}
+// //                   {/*    type="bar"*/}
+// //                   {/*    height="100%"*/}
+// //                   {/*    width="100%"*/}
+// //                   {/*/>*/}
+// //                 </div>
+// //               </div>
+// //             </div>
+
+// //         <div className={styles.contour} />
+// //         <div className={styles.monthBox}>
+// //           <div className={styles.monthInnerBox}>
+// //             <div className={styles.titleBox}>
+// //               <h3>2024년 월별</h3>
+// //             </div>
+// //             <div className={styles.charBox}>
+// //               <Chart
+// //                   options={viewData.options}
+// //                   series={viewData.series}
+// //                   type="bar"
+// //                   height="100%"
+// //                   width="100%"
+// //               />
+// //             </div>
+// //           </div>
+// //         </div>
+// //       <div className={styles.contour} />
+// //         <div className={styles.mapInnerBox}>
+// //           <div className={styles.titleBox}>
+// //             <h3>지도</h3>
+// //           </div>
+// //         </div>
+// //         <div className={styles.mapBox}>
+// //             <Map />
+// //         </div>
+
+// //       </main>
   );
 }
+
+

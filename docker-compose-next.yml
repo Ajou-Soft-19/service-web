@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  epas-dashboard:
+    image: bandall/epas-dashboard
+    container_name: epas-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production

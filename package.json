@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",
@@ -16,6 +16,12 @@
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18"
+    "autoprefixer": "^10.4.19",
+    "next": "14.2.1",
+    "postcss": "^8.4.38",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwindcss": "^3.4.3"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -23,6 +29,13 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.1",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5"
   }
 }
