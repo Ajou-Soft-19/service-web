@@ -44,7 +44,7 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
     }, [isDataReady, regionSupporters]);
 
     const initMap = async () => {
-        console.log(cities);
+        console.log(regionSupporters);
         const loader = new Loader({
             apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
             version: "weekly",
@@ -62,36 +62,44 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
         };
 
         const map = new google.maps.Map(mapRef.current!, mapOptions);
-        const topRegions = regionSupporters.slice(0, 3).map(rs => Region[rs.region as unknown as keyof typeof Region]);
-        const colors = ['#FFD700', '#585858', '#CD7F32'];
-        console.log(topRegions);
+        const regionsList = regionSupporters.map(rs => Region[rs.region as unknown as keyof typeof Region]);
+        const colors = ['#9518CF', '#2F18BB', '#045B27'];
+        const opacities = [0.8, 0.8, 0.8];
+        console.log(regionsList);
 
         cities.forEach((city) => {
-            const regionIndex = topRegions.indexOf(city.enumName);
+            const regionIndex = regionsList.indexOf(city.enumName);
             let color;
             let opacity;
-            if (regionIndex !== -1) {
+            if (regionIndex !== -1 && regionIndex < 3) {
                 color = colors[regionIndex];
-                opacity = 0.77;
+                opacity = opacities[regionIndex];
             } else {
-                color = '#0040FF';
-                opacity = 0.1;
+                color = '#1CA4B7';
+                opacity = 0.3;
             }
+
             const cityPolygon = new google.maps.Polygon({
                 paths: city.coordinates,
                 strokeColor: color,
-                strokeOpacity: opacity,
-                strokeWeight: 4,
+                strokeOpacity: 0.5,
+                strokeWeight: 3,
                 fillColor: color,
                 fillOpacity: opacity,
                 map: map,
             });
-
+            let supporterCount = 0;
+            if(regionIndex !== -1) {
+                supporterCount = regionSupporters[regionIndex].count ?? 0;
+            }
             const infoWindow = new google.maps.InfoWindow({
-                content: `<h3>${city.korName}</h3>`,
+                content: `<div style="color: #333; font-family: 'Arial', sans-serif; padding: 10px;">
+                            <h3 style="color: #007BFF; margin-top: 0; font-size: 20px;">${city.engName}</h3>
+                            <p style="font-size: 16px; margin-bottom: 0;">Supporters: <span style="font-weight: bold;">${supporterCount}</span></p>
+                          </div>`,
             });
+            
 
-            // 폴리곤 클릭 이벤트 리스너 추가
             cityPolygon.addListener('click', (event: { latLng: any; }) => {
                 infoWindow.setPosition(event.latLng);
                 infoWindow.open(map);

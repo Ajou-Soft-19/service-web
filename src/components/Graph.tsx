@@ -44,7 +44,7 @@ const Graph = ({regionSupporters, totalEventCount}: GraphProps) => {
                             >
                             </div>
                         </div>
-                        <div className="w-11 text-right font-bold">{data.count}</div>
+                        <div className="w-11 text-right font-bold text-black">{data.count}</div>
                     </div>
                 ))}
             </div>
