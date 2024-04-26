@@ -10,12 +10,6 @@ const Graph = ({regionSupporters, totalEventCount}: GraphProps) => {
     const [maxValue, setMaxValue] = useState(0);
     const [graphData, setGraphData] = useState(regionSupporters);
 
-    const rankColorStyles: { [key: string]: string } = {
-        '1st': 'from-yellow-400 to-yellow-300',
-        '2nd': 'from-gray-300 to-gray-200',
-        '3rd': 'from-orange-400 to-orange-300'
-    };
-
     useEffect(() => {
     const data: number[] = [];
     regionSupporters.forEach((v) => data.push(v.count));
