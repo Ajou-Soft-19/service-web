@@ -31,7 +31,7 @@ const Graph = ({regionSupporters, totalEventCount}: GraphProps) => {
 
     return (
         <>
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 mb-12">
             <h2 className="text-2xl font-bold text-black mb-4">👏 Supporters Count</h2>
             <div className="grid grid-cols-1 gap-4">
                 {graphData.map((data: RegionCountInterface, index) => (
