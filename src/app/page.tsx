@@ -120,7 +120,6 @@ export default function Home() {
                   </div>
                 </div>
             </SwiperSlide>
-            
             </Swiper>
           </div>
         </main>

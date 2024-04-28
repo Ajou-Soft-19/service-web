@@ -55,7 +55,7 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
         const position = { lat: 36.674108, lng: 127.961290 };
         const mapOptions = {
             center: position,
-            zoom: 7.0,
+            zoom: 6.6,
             mapId: 'YOUR_MAP_ID_HERE',
             disableDefaultUI: true,
             zoomControl: false

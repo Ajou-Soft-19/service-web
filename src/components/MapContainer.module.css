@@ -4,11 +4,17 @@
   justify-content: center;
   align-items: center;
   width: 84vw;
-  height: 50vh;
+  height: 70vh;
+}
+
+@media (max-width: 767px) {
+  .container {
+    height: 60vh;
+  }
 }
 
 @media (min-width: 768px) {
   .container {
-    width: 70vw;
+    width: 75vw;
   }
 }
