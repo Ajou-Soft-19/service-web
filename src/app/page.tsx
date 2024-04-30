@@ -63,7 +63,7 @@ export default function Home() {
   const [countData, setCountData] = useState(initCountData);
   const swiperRef = useRef<any>(null);
 
-  const requestURL = `https://ajou-epas.xyz:7001/api/supporter/count?year=${currentYear}&month=${currentMonth}`;
+  const requestURL = `https://ajou-epas.xyz:7001/api/supporter/count?year=${currentYear}`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +73,7 @@ export default function Home() {
           throw new Error('Network response was not ok');
         }
         const jsonData = await response.json();
+        console.log(jsonData);
         setCountData(jsonData.data);
         if (swiperRef.current?.swiper) {
           swiperRef.current.swiper.updatePagination();
