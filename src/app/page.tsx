@@ -113,7 +113,7 @@ export default function Home() {
             <SwiperSlide>
               <div className="mt-[0px]">
                 <div className="bg-white rounded-lg shadow-md p-6 mb-12">
-                    <h2 className="text-2xl font-bold mb-4 text-black">🗺 Top 3 Supporters</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-black">🗺 Top 5 Supporters</h2>
                     <div className="flex justify-center" style={{ alignItems: "end" }}>
                       <Map regionSupporters={countData.regionSupporters} totalEventCount={countData.totalEventCount}/>
                     </div>

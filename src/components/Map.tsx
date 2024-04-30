@@ -63,8 +63,8 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
 
         const map = new google.maps.Map(mapRef.current!, mapOptions);
         const regionsList = regionSupporters.map(rs => Region[rs.region as unknown as keyof typeof Region]);
-        const colors = ['#9518CF', '#2F18BB', '#045B27'];
-        const opacities = [0.8, 0.8, 0.8];
+        const colors = ['#FFD700', '#585858', '#CD7F32'];
+        const opacities = [0.8, 0.9, 0.9];
         console.log(regionsList);
 
         cities.forEach((city) => {
@@ -74,7 +74,11 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
             if (regionIndex !== -1 && regionIndex < 3) {
                 color = colors[regionIndex];
                 opacity = opacities[regionIndex];
-            } else {
+            } else if(regionIndex !== -1 && regionIndex >= 3 && regionIndex < 6) {
+                color = '#0040FF';
+                opacity = 0.7;
+            }
+            else {
                 color = '#1CA4B7';
                 opacity = 0.3;
             }
