@@ -76,7 +76,11 @@ const Map = ({regionSupporters, totalEventCount}: GraphProps) => {
                 opacity = opacities[regionIndex];
             } else if(regionIndex !== -1 && regionIndex >= 3 && regionIndex < 6) {
                 color = '#0040FF';
-                opacity = 0.7;
+                if(regionIndex === 3) {
+                    opacity = 0.8;
+                } else {
+                    opacity = 0.6;
+                }
             }
             else {
                 color = '#1CA4B7';
