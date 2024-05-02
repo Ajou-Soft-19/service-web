@@ -74,10 +74,12 @@ export default function Home() {
         }
         const jsonData = await response.json();
         console.log(jsonData);
-        setCountData(jsonData.data);
-        if (swiperRef.current?.swiper) {
-          swiperRef.current.swiper.updatePagination();
-        }
+        const topFiveData = {
+          ...jsonData.data,
+          regionSupporters: jsonData.data.regionSupporters.slice(0, 5)
+        };
+        console.log(topFiveData);
+        setCountData(topFiveData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
